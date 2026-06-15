@@ -3,49 +3,650 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatBotPro</title>
+    <meta name="description" content="ChatBotPro — A clean, light-themed AI assistant mockup featuring interactive Kenya-specific FAQ responses and natural typing delay.">
+    <meta name="keywords" content="ChatBotPro, chatbot, AI assistant, messenger, web app, React, JavaScript, Nairobi">
+    <meta name="author" content="Fred Otieno">
+    <title>ChatBotPro — Intelligent Customer Support Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
-        :root { --bg: #0f172a; --text: #f8fafc; --accent: #8b5cf6; }
-        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; line-height: 1.6; }
-        * { box-sizing: border-box; }
+        /* ===== Native System UI & Light Sky Blue Theme ===== */
+        :root {
+            --bg-body: #f3f4f6;
+            --bg-card: #ffffff;
+            --accent-blue: #0070f3;
+            --accent-blue-hover: #0051b3;
+            --bubble-user: #0070f3;
+            --bubble-bot: #e5e7eb;
+            --text-user: #ffffff;
+            --text-bot: #1f2937;
+            --border-color: #e5e7eb;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --text-muted: #9ca3af;
+            --radius-bubble: 18px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-system);
+            background: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== Navbar ===== */
+        .navbar {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 18px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-weight: 800;
+            font-size: 1.35rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo i {
+            color: var(--accent-blue);
+        }
+        .logo span {
+            color: var(--accent-blue);
+        }
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all var(--transition);
+        }
+        .github-link:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+            background: rgba(0, 112, 243, 0.05);
+        }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            padding: 70px 0 50px;
+            text-align: center;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .hero-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            background: rgba(0, 112, 243, 0.1);
+            border: 1px solid rgba(0, 112, 243, 0.15);
+            padding: 6px 14px;
+            border-radius: 100px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 850;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            background: var(--accent-blue);
+            color: #fff;
+            font-weight: 700;
+            border-radius: 6px;
+            transition: all var(--transition);
+        }
+        .btn-primary:hover {
+            background: var(--accent-blue-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 112, 243, 0.2);
+        }
+
+        /* ===== Interactive Messenger Preview ===== */
+        .messenger-preview {
+            padding: 60px 0;
+        }
+        .chat-window {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            max-width: 550px;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+        }
         
-        /* Alternating Colors */
-        section:nth-of-type(even) { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); box-shadow: inset 0 0 50px rgba(0,0,0,0.3); }
-        section:nth-of-type(odd) { background: var(--bg); }
-        
-        section { padding: 100px 20px; text-align: center; }
-        h1 { font-size: 3.5rem; margin-bottom: 20px; }
-        h2 { font-size: 2.5rem; margin-bottom: 20px; color: var(--accent); }
-        p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 40px; color: #94a3b8; }
-        .btn { display: inline-block; padding: 15px 30px; background: var(--accent); color: white; text-decoration: none; border-radius: 30px; font-weight: 600; transition: transform 0.2s; }
-        .btn:hover { transform: translateY(-3px); }
-        
-        .grid { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
-        .card { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); width: 300px; }
-        .card h3 { color: var(--accent); }
+        /* Chat Header */
+        .chat-header {
+            background: var(--bg-card);
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .bot-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .bot-avatar {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 112, 243, 0.1);
+            color: var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .bot-info h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .bot-status {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+
+        /* Chat Body */
+        .chat-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Message Bubbles */
+        .message {
+            max-width: 75%;
+            display: flex;
+            flex-direction: column;
+        }
+        .message.bot {
+            align-self: flex-start;
+        }
+        .message.user {
+            align-self: flex-end;
+        }
+        .bubble {
+            padding: 10px 16px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .message.bot .bubble {
+            background: var(--bubble-bot);
+            color: var(--text-bot);
+            border-radius: 0 16px 16px 16px;
+        }
+        .message.user .bubble {
+            background: var(--bubble-user);
+            color: var(--text-user);
+            border-radius: 16px 16px 0 16px;
+        }
+        .msg-time {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            margin-left: 6px;
+        }
+        .message.user .msg-time {
+            text-align: right;
+            margin-right: 6px;
+        }
+
+        /* Suggested FAQ Pills */
+        .faq-suggestions {
+            background: #f9fafb;
+            padding: 10px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .faq-pill {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 0.78rem;
+            color: var(--accent-blue);
+            cursor: pointer;
+            transition: all var(--transition);
+            font-weight: 500;
+        }
+        .faq-pill:hover {
+            border-color: var(--accent-blue);
+            background: rgba(0, 112, 243, 0.02);
+        }
+
+        /* Chat Footer Input */
+        .chat-footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 12px 16px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .chat-input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            outline: none;
+            font-size: 0.9rem;
+            font-family: var(--font-system);
+        }
+        .chat-input:focus {
+            border-color: var(--accent-blue);
+        }
+        .btn-send {
+            background: var(--accent-blue);
+            color: #fff;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background var(--transition);
+        }
+        .btn-send:hover {
+            background: var(--accent-blue-hover);
+        }
+
+        /* typing dots animation */
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+            padding: 8px 4px;
+        }
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            animation: bounce 1.3s infinite;
+        }
+        .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-4px); }
+        }
+
+        /* ===== Features Grid ===== */
+        .features {
+            padding: 80px 0;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .section-header h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .section-header p {
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+        .feature-card {
+            background: var(--bg-body);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: var(--radius-md);
+        }
+        .feature-card i {
+            font-size: 1.6rem;
+            color: var(--accent-blue);
+            margin-bottom: 16px;
+        }
+        .feature-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            padding: 48px 0;
+            background: var(--bg-body);
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .footer-logo {
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        .footer-logo span {
+            color: var(--accent-blue);
+        }
+        .footer a {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .footer a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* Alternating backgrounds override */
+        section:nth-of-type(even) {
+            background-color: var(--bg-body) !important;
+        }
+        section:nth-of-type(odd) {
+            background-color: var(--bg-card) !important;
+        }
     </style>
 </head>
 <body>
-    <section>
-        <h1>ChatBotPro</h1>
-        <p>Intelligent Conversations, Powered by AI</p>
-        <a href="https://github.com/Fred4377/chatbotpro" class="btn">View on GitHub</a>
-    </section>
-    <section>
-        <h2>Features</h2>
-        <div class="grid">
-            <div class="card"><h3>AI-Powered Responses</h3><p>Experience seamless functionality.</p></div>
-            <div class="card"><h3>Real-Time Messaging</h3><p>Experience seamless functionality.</p></div>
-            <div class="card"><h3>Easy Integration</h3><p>Experience seamless functionality.</p></div>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fa-regular fa-comment-dots"></i>ChatBot<span>Pro</span>
+            </a>
+            <a href="https://github.com/Fred4377/chatbotpro" target="_blank" rel="noopener noreferrer" class="github-link">
+                <i class="fa-brands fa-github"></i> GitHub
+            </a>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">Simulated AI Help Desk</div>
+            <h1>Smart, Human-Like Interactions</h1>
+            <p>
+                A modern client-side support messenger demo designed with local Kenya context,
+                suggested FAQs, and typing indicator simulation for organic user flow.
+            </p>
+            <a href="#demo" class="btn-primary">
+                <i class="fa-solid fa-comments"></i> Start Support Chat
+            </a>
         </div>
     </section>
-    <section>
-        <h2>Tech Stack</h2>
-        <p>Built with React, Node.js, and modern web technologies.</p>
+
+    <!-- ===== MESSENGER DEMO ===== -->
+    <section class="messenger-preview" id="demo">
+        <div class="container">
+            <div class="chat-window">
+                <!-- Header -->
+                <div class="chat-header">
+                    <div class="bot-profile">
+                        <div class="bot-avatar">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div class="bot-info">
+                            <h3>ChatBotPro Helpdesk</h3>
+                            <div class="bot-status">
+                                <span class="status-dot"></span> Online Assistant
+                            </div>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-ellipsis-vertical" style="color: var(--text-muted); cursor: pointer;"></i>
+                </div>
+
+                <!-- Messages container -->
+                <div class="chat-body" id="chatBody">
+                    <!-- Bot message -->
+                    <div class="message bot">
+                        <div class="bubble">
+                            Jambo! 👋 I'm Fred's assistant. How can I help you today with delivery, payments, or offices in Kenya?
+                        </div>
+                        <span class="msg-time" id="initialTime">12:00 PM</span>
+                    </div>
+                </div>
+
+                <!-- Suggested Pills -->
+                <div class="faq-suggestions" id="faqGrid">
+                    <div class="faq-pill" data-msg="Do you deliver to Mombasa?">Do you deliver to Mombasa?</div>
+                    <div class="faq-pill" data-msg="What are your payment options?">What are your payment options?</div>
+                    <div class="faq-pill" data-msg="Where is your office in Nairobi?">Where is your office in Nairobi?</div>
+                </div>
+
+                <!-- Footer Input -->
+                <div class="chat-footer">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Type a message here...">
+                    <button class="btn-send" id="btnSend">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
     </section>
-    <section>
-        <p>&copy; 2026 Fred Otieno. Built with ❤️</p>
+
+    <!-- ===== FEATURES ===== -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Product Capabilities</h2>
+                <p>Support chatbots built to improve conversions with intelligent, localized answers.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fa-solid fa-bolt"></i>
+                    <h3>Local Knowledge Base</h3>
+                    <p>Pre-populated support maps to resolve regional concerns instantly, from county delivery to local tax codes.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                    <h3>Natural Cadence</h3>
+                    <p>Typing delay logic prevents robotic replies, keeping users engaged with natural chat flows.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-circle-question"></i>
+                    <h3>Interactive Seeds</h3>
+                    <p>Clickable quick-answers shorten customer inquiry journeys, driving faster checkouts.</p>
+                </div>
+            </div>
+        </div>
     </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <i class="fa-regular fa-comment-dots"></i>ChatBot<span>Pro</span>
+            </div>
+            <p style="margin-bottom: 8px;">Built by <a href="https://github.com/Fred4377" target="_blank" rel="noopener noreferrer">Fred Otieno</a></p>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">&copy; 2026 ChatBotPro. support system demo.</p>
+        </div>
+    </footer>
+
+    <!-- ===== Chatbot script ===== -->
+    <script>
+        // Set initial message timestamp
+        const now = new Date();
+        const hrs = String(now.getHours()).padStart(2, '0');
+        const mins = String(now.getMinutes()).padStart(2, '0');
+        document.getElementById('initialTime').textContent = `${hrs}:${mins}`;
+
+        // Chat UI references
+        const chatBody = document.getElementById('chatBody');
+        const chatInput = document.getElementById('chatInput');
+        const btnSend = document.getElementById('btnSend');
+        const faqGrid = document.getElementById('faqGrid');
+
+        // Kenya localized response mapping
+        const responseMap = {
+            "do you deliver to mombasa?": "Yes, we do! 📦 We ship countrywide via G4S or Wells Fargo Courier. Delivery to Mombasa takes 24 hours and costs KSh 350.",
+            "what are your payment options?": "We accept Lipa na M-Pesa (C2B Paybill or STK Push), Visa, Mastercard, and Cash on Delivery for orders inside Nairobi CBD.",
+            "where is your office in nairobi?": "Our developer workstation is located in Westlands, Nairobi, near the Inceptor Institute of Technology campus."
+        };
+        const fallbackMsg = "Thanks for asking! I'm a support demo assistant. Fred can hook this bot up to OpenAI's GPT-4 or Anthropic's Claude APIs to answer complex queries about ShopEase or BookEase.";
+
+        function formatTime() {
+            const d = new Date();
+            const h = String(d.getHours()).padStart(2, '0');
+            const m = String(d.getMinutes()).padStart(2, '0');
+            return `${h}:${m}`;
+        }
+
+        // Add message bubble
+        function appendMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${sender}`;
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'bubble';
+            bubbleDiv.innerHTML = text;
+            
+            const timeSpan = document.createElement('span');
+            timeSpan.className = 'msg-time';
+            timeSpan.textContent = formatTime();
+            
+            msgDiv.appendChild(bubbleDiv);
+            msgDiv.appendChild(timeSpan);
+            chatBody.appendChild(msgDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+            
+            return msgDiv;
+        }
+
+        // Trigger bot response with simulated typing
+        function triggerBotResponse(userMsg) {
+            // Add typing indicator
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot';
+            typingDiv.innerHTML = `
+                <div class="bubble" style="padding: 6px 12px;">
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            `;
+            chatBody.appendChild(typingDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            const cleanMsg = userMsg.toLowerCase().trim();
+            const reply = responseMap[cleanMsg] || fallbackMsg;
+
+            // Simulated typing delay
+            setTimeout(() => {
+                // Remove typing indicator
+                typingDiv.remove();
+                
+                // Add real message
+                appendMessage(reply, 'bot');
+            }, 1200);
+        }
+
+        // Send logic
+        function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            appendMessage(text, 'user');
+            chatInput.value = '';
+            
+            triggerBotResponse(text);
+        }
+
+        btnSend.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // suggested pills click handler
+        faqGrid.addEventListener('click', (e) => {
+            const pill = e.target.closest('.faq-pill');
+            if (!pill) return;
+
+            const text = pill.getAttribute('data-msg');
+            appendMessage(text, 'user');
+            
+            triggerBotResponse(text);
+        });
+    </script>
 </body>
 </html>
