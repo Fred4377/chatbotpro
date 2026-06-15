@@ -99,10 +99,16 @@ const ChatWidget = ({ botConfig, botOwnerId, previewMode = false, autofillText =
         setIsTyping(false);
         const lower = text.toLowerCase();
         let reply = '';
-        if (lower.includes('hour') || lower.includes('time') || lower.includes('open')) {
+        if (lower.includes('mombasa') || lower.includes('deliver') || lower.includes('ship')) {
+          reply = "Yes, we do! 📦 We ship countrywide via G4S or Wells Fargo Courier. Delivery to Mombasa takes 24 hours and costs KSh 350.";
+        } else if (lower.includes('payment') || lower.includes('mpesa') || lower.includes('stk')) {
+          reply = "We accept Lipa na M-Pesa (C2B Paybill or STK Push), Visa, Mastercard, and Cash on Delivery for orders inside Nairobi CBD.";
+        } else if (lower.includes('office') || lower.includes('nairobi') || lower.includes('location') || lower.includes('where')) {
+          reply = "Our developer workstation is located in Westlands, Nairobi, near the Inceptor Institute of Technology campus.";
+        } else if (lower.includes('hour') || lower.includes('time') || lower.includes('open')) {
           reply = "We are open Monday to Saturday from 9am to 10pm, and Sunday from 10am to 9pm.";
         } else if (lower.includes('menu') || lower.includes('food') || lower.includes('serve') || lower.includes('price')) {
-          reply = "We serve delicious Italian and local cuisine. Popular items: Pizza $8, Pasta $7, Burger $6.";
+          reply = "We serve delicious Italian and local cuisine. Popular items: Pizza KSh 800, Pasta KSh 700, Burger KSh 600.";
         } else if (lower.includes('contact') || lower.includes('phone') || lower.includes('whatsapp') || lower.includes('call')) {
           reply = "You can contact us via phone or WhatsApp at +254700000000.";
         } else {
@@ -117,6 +123,7 @@ const ChatWidget = ({ botConfig, botOwnerId, previewMode = false, autofillText =
       }, 1000);
       return;
     }
+
 
     try {
       // POST message to API
@@ -195,10 +202,10 @@ const ChatWidget = ({ botConfig, botOwnerId, previewMode = false, autofillText =
           style={{
             width: '360px',
             height: '500px',
-            background: '#0D1117',
-            border: '1px solid #30363D',
+            background: 'var(--card-bg)',
+            border: '1px solid var(--border-color)',
             borderRadius: '12px',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)',
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
@@ -211,12 +218,12 @@ const ChatWidget = ({ botConfig, botOwnerId, previewMode = false, autofillText =
           <div 
             style={{
               padding: '15px',
-              background: '#161B22',
-              borderBottom: '1px solid #30363D',
+              background: 'var(--card-bg)',
+              borderBottom: '1px solid var(--border-color)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              color: '#fff'
+              color: 'var(--text-color)'
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -232,7 +239,8 @@ const ChatWidget = ({ botConfig, botOwnerId, previewMode = false, autofillText =
                   justifyContent: 'center',
                   fontWeight: '700',
                   fontSize: '1rem',
-                  position: 'relative'
+                  position: 'relative',
+                  color: '#fff'
                 }}
               >
                 {config.botName.charAt(0).toUpperCase()}
@@ -246,13 +254,13 @@ const ChatWidget = ({ botConfig, botOwnerId, previewMode = false, autofillText =
                     height: '10px',
                     borderRadius: '50%',
                     background: '#10B981',
-                    border: '2px solid #161B22'
+                    border: '2px solid var(--card-bg)'
                   }}
                 ></span>
               </div>
               <div>
                 <h4 style={{ fontSize: '0.95rem', fontWeight: '600' }}>{config.botName}</h4>
-                <span style={{ fontSize: '0.75rem', color: '#8B949E' }}>Online Support</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Online Support</span>
               </div>
             </div>
             
@@ -260,14 +268,14 @@ const ChatWidget = ({ botConfig, botOwnerId, previewMode = false, autofillText =
             <div style={{ display: 'flex', gap: '12px' }}>
               <button 
                 onClick={handleToggle}
-                style={{ background: 'none', border: 'none', color: '#8B949E', cursor: 'pointer', fontSize: '1rem' }}
+                style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '1rem' }}
                 aria-label="Minimize Chat"
               >
                 <i className="fa-solid fa-chevron-down"></i>
               </button>
               <button 
                 onClick={handleToggle}
-                style={{ background: 'none', border: 'none', color: '#8B949E', cursor: 'pointer', fontSize: '1.1rem' }}
+                style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '1.1rem' }}
                 aria-label="Close Chat"
               >
                 <i className="fa-solid fa-xmark"></i>
@@ -275,13 +283,14 @@ const ChatWidget = ({ botConfig, botOwnerId, previewMode = false, autofillText =
             </div>
           </div>
 
+
           {/* Messages Area */}
           <div 
             style={{
               flex: 1,
               padding: '15px',
               overflowY: 'auto',
-              background: '#0D1117',
+              background: '#f9fafb',
               display: 'flex',
               flexDirection: 'column'
             }}
@@ -308,8 +317,8 @@ const ChatWidget = ({ botConfig, botOwnerId, previewMode = false, autofillText =
                 }}>
                   {config.botName.charAt(0).toUpperCase()}
                 </div>
-                <h5 style={{ fontSize: '0.95rem', fontWeight: '600', marginBottom: '4px' }}>Hi! I'm {config.botName}</h5>
-                <p style={{ fontSize: '0.85rem', color: '#8B949E', padding: '0 20px', lineHeight: '1.4' }}>
+                <h5 style={{ fontSize: '0.95rem', fontWeight: '600', marginBottom: '4px', color: 'var(--text-color)' }}>Hi! I'm {config.botName}</h5>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', padding: '0 20px', lineHeight: '1.4' }}>
                   {config.welcomeMessage}
                 </p>
               </div>
@@ -337,58 +346,61 @@ const ChatWidget = ({ botConfig, botOwnerId, previewMode = false, autofillText =
               display: 'flex',
               gap: '8px',
               overflowX: 'auto',
-              background: '#0D1117'
+              background: '#f9fafb'
             }}>
               <button 
-                onClick={() => handleQuickReply('Opening hours')}
+                onClick={() => handleQuickReply('Do you deliver to Mombasa?')}
                 style={{
-                  background: 'rgba(30, 144, 255, 0.1)',
-                  border: '1px solid rgba(30, 144, 255, 0.3)',
+                  background: 'rgba(0, 112, 243, 0.08)',
+                  border: '1px solid rgba(0, 112, 243, 0.2)',
                   borderRadius: '16px',
                   padding: '6px 14px',
                   fontSize: '0.8rem',
-                  color: '#1E90FF',
+                  color: 'var(--primary-color)',
                   whiteSpace: 'nowrap',
                   cursor: 'pointer',
-                  transition: 'background 0.2s'
+                  transition: 'background 0.2s',
+                  fontWeight: '500'
                 }}
                 className="btn-quick-reply"
               >
-                Opening hours
+                Mombasa Delivery?
               </button>
               <button 
-                onClick={() => handleQuickReply('Services & Pricing')}
+                onClick={() => handleQuickReply('What are your payment options?')}
                 style={{
-                  background: 'rgba(30, 144, 255, 0.1)',
-                  border: '1px solid rgba(30, 144, 255, 0.3)',
+                  background: 'rgba(0, 112, 243, 0.08)',
+                  border: '1px solid rgba(0, 112, 243, 0.2)',
                   borderRadius: '16px',
                   padding: '6px 14px',
                   fontSize: '0.8rem',
-                  color: '#1E90FF',
+                  color: 'var(--primary-color)',
                   whiteSpace: 'nowrap',
                   cursor: 'pointer',
-                  transition: 'background 0.2s'
+                  transition: 'background 0.2s',
+                  fontWeight: '500'
                 }}
                 className="btn-quick-reply"
               >
-                Services & Pricing
+                M-Pesa Payments?
               </button>
               <button 
-                onClick={() => handleQuickReply('Contact Info')}
+                onClick={() => handleQuickReply('Where is your office in Nairobi?')}
                 style={{
-                  background: 'rgba(30, 144, 255, 0.1)',
-                  border: '1px solid rgba(30, 144, 255, 0.3)',
+                  background: 'rgba(0, 112, 243, 0.08)',
+                  border: '1px solid rgba(0, 112, 243, 0.2)',
                   borderRadius: '16px',
                   padding: '6px 14px',
                   fontSize: '0.8rem',
-                  color: '#1E90FF',
+                  color: 'var(--primary-color)',
                   whiteSpace: 'nowrap',
                   cursor: 'pointer',
-                  transition: 'background 0.2s'
+                  transition: 'background 0.2s',
+                  fontWeight: '500'
                 }}
                 className="btn-quick-reply"
               >
-                Contact Info
+                Nairobi Office?
               </button>
             </div>
           )}
@@ -397,8 +409,8 @@ const ChatWidget = ({ botConfig, botOwnerId, previewMode = false, autofillText =
           <div 
             style={{
               padding: '10px 15px',
-              background: '#161B22',
-              borderTop: '1px solid #30363D',
+              background: 'var(--card-bg)',
+              borderTop: '1px solid var(--border-color)',
               display: 'flex',
               alignItems: 'center',
               gap: '10px'
@@ -413,15 +425,16 @@ const ChatWidget = ({ botConfig, botOwnerId, previewMode = false, autofillText =
               disabled={isTyping}
               style={{
                 flex: 1,
-                background: '#0D1117',
-                border: '1px solid #30363D',
+                background: '#ffffff',
+                border: '1px solid var(--border-color)',
                 borderRadius: '6px',
                 padding: '8px 12px',
                 outline: 'none',
                 fontSize: '0.9rem',
-                color: '#fff'
+                color: 'var(--text-color)'
               }}
             />
+
             <button 
               onClick={() => sendMessage(inputText)}
               disabled={isTyping || !inputText.trim() || disableSendTemp}

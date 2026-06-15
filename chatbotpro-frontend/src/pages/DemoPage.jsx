@@ -8,18 +8,18 @@ const DemoPage = () => {
 
   // Frequently asked questions for the demo restaurant
   const suggestedQuestions = [
-    "What are your opening hours?",
-    "What food do you serve?",
-    "How do I make a reservation?",
-    "Where are you located?",
-    "What is your most popular dish?"
+    "Do you deliver to Mombasa?",
+    "What are your payment options?",
+    "Where is your office in Nairobi?",
+    "What is your most popular dish?",
+    "How do I make a reservation?"
   ];
 
   const demoBotConfig = {
     botName: "Bella (AI Assistant)",
-    welcomeMessage: "Hi! I'm Bella. Ask me anything about Bella Bites Restaurant!",
-    primaryColor: "#0ea5e9", // changed from generic red to ocean blue
-    businessInfo: "Bella Bites Restaurant, Nairobi. Italian cuisine. Open Mon-Sat 9am-10pm, Sun 10am-9pm. Menu: Pizza $8, Pasta $7, Burger $6, Salad $5. Reservations: +254700000000. Located at central business area in Nairobi. Most popular dish is our Pasta Carbonara and Margherita Pizza.",
+    welcomeMessage: "Jambo! 👋 I'm Bella. Ask me anything about Bella Bites Restaurant!",
+    primaryColor: "#0070f3",
+    businessInfo: "Bella Bites Restaurant, Nairobi. Italian & local cuisine. Open Mon-Sat 9am-10pm, Sun 10am-9pm. Menu: Pizza KSh 800, Pasta KSh 700, Burger KSh 600, Salad KSh 500. Deliveries: Countrywide via G4S (Mombasa KSh 350). Payments: Lipa na M-Pesa STK Push, Visa, Mastercard. Located in Westlands, Nairobi, near Inceptor Hub. Popular dishes: Pasta Carbonara and Grilled Tilapia.",
     personality: "friendly",
     language: "English",
     isActive: true,
@@ -27,12 +27,12 @@ const DemoPage = () => {
   };
 
   const handleQuestionClick = (q) => {
-    // Append a space to force change detection in useEffect - hacky but it works lol
+    // Append a space to force change detection
     setAutofillValue(q + ' ');
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'var(--dark-bg)' }}>
       <Navbar />
 
       <main className="container" style={{
@@ -45,37 +45,37 @@ const DemoPage = () => {
       }}>
         {/* Left Info Panel */}
         <div style={{
-          background: '#1e293b',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
+          background: 'var(--card-bg)',
+          border: '1px solid var(--border-color)',
           borderRadius: '16px',
           padding: '30px'
         }}>
-          <h1 style={{ fontSize: '1.8rem', fontWeight: '700', marginBottom: '15px', color: '#0ea5e9' }}>
+          <h1 style={{ fontSize: '1.8rem', fontWeight: '800', marginBottom: '15px', color: 'var(--primary-color)', fontFamily: 'var(--font-family)' }}>
             See ChatBot Pro in Action
           </h1>
-          <p style={{ color: '#f8fafc', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '20px' }}>
+          <p style={{ color: 'var(--text-color)', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '20px' }}>
             We've set up a demo chatbot named <strong>Bella</strong> for a fictional business called <strong>Bella Bites Restaurant</strong>.
           </p>
           <div style={{
-            background: '#0f172a',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
+            background: 'var(--dark-bg)',
+            border: '1px solid var(--border-color)',
             borderRadius: '12px',
             padding: '20px',
             marginBottom: '25px',
             fontSize: '0.85rem',
             lineHeight: '1.5'
           }}>
-            <h4 style={{ color: '#94a3b8', textTransform: 'uppercase', marginBottom: '12px', fontSize: '0.75rem', letterSpacing: '0.05em' }}>Demo Restaurant Details</h4>
-            <div style={{ display: 'grid', gap: '8px', color: '#f8fafc' }}>
+            <h4 style={{ color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '12px', fontSize: '0.75rem', letterSpacing: '0.05em', fontWeight: '700' }}>Demo Restaurant Details</h4>
+            <div style={{ display: 'grid', gap: '8px', color: 'var(--text-color)' }}>
               <p><strong>Name:</strong> Bella Bites Restaurant</p>
-              <p><strong>Cuisine:</strong> Italian & Local</p>
+              <p><strong>Cuisine:</strong> Italian & Local Kenyan</p>
               <p><strong>Hours:</strong> Mon-Sat 9am-10pm, Sun 10am-9pm</p>
-              <p><strong>Menu:</strong> Pizza $8, Pasta $7, Burger $6, Salad $5</p>
+              <p><strong>Menu:</strong> Pizza KSh 800, Pasta KSh 700, Burger KSh 600, Salad KSh 500</p>
               <p><strong>Contact:</strong> +254700000000</p>
             </div>
           </div>
 
-          <h3 style={{ fontSize: '1.1rem', marginBottom: '15px', fontWeight: '600' }}>Suggested Questions</h3>
+          <h3 style={{ fontSize: '1.1rem', marginBottom: '15px', fontWeight: '700', color: 'var(--text-color)' }}>Suggested Questions</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {suggestedQuestions.map((q, i) => (
               <button
@@ -83,19 +83,19 @@ const DemoPage = () => {
                 onClick={() => handleQuestionClick(q)}
                 style={{
                   textAlign: 'left',
-                  background: '#0f172a',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  background: 'var(--dark-bg)',
+                  border: '1px solid var(--border-color)',
                   padding: '12px 15px',
                   borderRadius: '8px',
                   cursor: 'pointer',
                   fontSize: '0.9rem',
-                  color: '#f8fafc',
+                  color: 'var(--text-color)',
                   transition: 'all 0.2s',
                   width: '100%'
                 }}
                 className="suggested-q-btn"
               >
-                <i className="fa-solid fa-circle-question" style={{ color: '#0ea5e9', marginRight: '10px' }}></i>
+                <i className="fa-solid fa-circle-question" style={{ color: 'var(--primary-color)', marginRight: '10px' }}></i>
                 {q}
               </button>
             ))}
@@ -106,17 +106,17 @@ const DemoPage = () => {
         <div style={{
           position: 'relative',
           height: '520px',
-          border: '1px dashed rgba(255, 255, 255, 0.2)',
+          border: '1px dashed var(--border-color)',
           borderRadius: '16px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'radial-gradient(circle at center, rgba(14, 165, 233, 0.05) 0%, transparent 70%)',
+          background: 'radial-gradient(circle at center, rgba(0, 112, 243, 0.05) 0%, transparent 70%)',
           padding: '20px'
         }}>
-          <div style={{ textAlign: 'center', color: '#94a3b8' }}>
-            <i className="fa-solid fa-arrow-down-right" style={{ fontSize: '2.5rem', marginBottom: '15px', color: '#0ea5e9' }}></i>
-            <h3>Test the widget here</h3>
+          <div style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
+            <i className="fa-solid fa-arrow-down-right" style={{ fontSize: '2.5rem', marginBottom: '15px', color: 'var(--primary-color)' }}></i>
+            <h3 style={{ color: 'var(--text-color)', fontWeight: '700' }}>Test the widget here</h3>
             <p style={{ fontSize: '0.85rem', maxWidth: '300px', margin: '8px auto 0 auto' }}>
               Click on the suggested questions on the left or tap the chat bubble in the bottom right corner of the page to start a conversation.
             </p>
@@ -129,8 +129,8 @@ const DemoPage = () => {
 
       <style>{`
         .suggested-q-btn:hover {
-          border-color: #0ea5e9 !important;
-          background: rgba(14, 165, 233, 0.05) !important;
+          border-color: var(--primary-color) !important;
+          background: rgba(0, 112, 243, 0.05) !important;
           transform: translateX(4px);
         }
         @media (max-width: 768px) {

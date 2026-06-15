@@ -8,20 +8,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Switched from generic indigo to a nice deep ocean blue */
-  --primary-color: #0ea5e9;
-  --primary-hover: #0284c7;
+  /* Light Sky Blue Theme */
+  --primary-color: #0070f3;
+  --primary-hover: #0051b3;
   
-  --dark-bg: #0f172a;
-  --card-bg: #1e293b;
+  --dark-bg: #f3f4f6;
+  --card-bg: #ffffff;
   --success-color: #10B981;
-  --bot-msg-bg: #334155;
-  --user-msg-bg: #0ea5e9;
+  --bot-msg-bg: #e5e7eb;
+  const: #0070f3; /* alias helper */
+  --user-msg-bg: #0070f3;
   
-  --text-color: #f8fafc;
-  --text-muted: #94a3b8;
-  --border-color: rgba(255, 255, 255, 0.08);
-  --input-bg: #0f172a;
+  --text-color: #1f2937;
+  --text-muted: #4b5563;
+  --border-color: #e5e7eb;
+  --input-bg: #ffffff;
   
   --font-family: 'Outfit', sans-serif;
   --transition-speed: 0.25s;
@@ -35,6 +36,7 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
 }
+
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
