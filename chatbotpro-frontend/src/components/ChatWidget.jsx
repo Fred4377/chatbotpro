@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { getOrCreateSessionId, resetSessionId } from '../utils/session';
 import ChatBubble from './ChatBubble';
 import ChatMessage from './ChatMessage';
@@ -39,7 +39,7 @@ const ChatWidget = ({ botConfig, botOwnerId, previewMode = false, autofillText =
     const fetchHistory = async () => {
       if (previewMode || !botOwnerId) return;
       try {
-        const res = await axios.get(`http://localhost:5000/api/chat/session/${sessionId}`);
+        const res = await api.get(`/chat/session/${sessionId}`);
         if (res.data.success && res.data.data && res.data.data.messages) {
           setMessages(res.data.data.messages);
         }
@@ -133,7 +133,7 @@ const ChatWidget = ({ botConfig, botOwnerId, previewMode = false, autofillText =
         content: m.content
       }));
 
-      const response = await axios.post('http://localhost:5000/api/chat/message', {
+      const response = await api.post('/chat/message', {
         sessionId,
         botOwnerId,
         message: text,
